@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Satyajit Dutta | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.11.1/build/spline-viewer.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Sora', 'sans-serif'],
+            },
+            colors: {
+              'background': '#080808',
+              'surface': '#121212',
+              'primary': '#FFC700', // Gold
+              'secondary': '#FF6B00', // Orange
+              'border-color': 'rgba(255, 199, 0, 0.1)',
+              'brand-dark': '#010409',
+              'brand-dark-2': '#0D1117',
+              'brand-accent': '#238636',
+              'brand-accent-glow': '#30a14e',
+              'brand-cyan': '#22d3ee',
+            },
+            animation: {
+              'gradient-text': 'gradient-text 5s ease infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'bg-pan': 'bg-pan 15s linear infinite',
+              'aurora': 'aurora 20s infinite alternate linear',
+            },
+            keyframes: {
+              'gradient-text': {
+                '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+                '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
+              },
+              'float': {
+                '0%': { transform: 'translatey(0px)' },
+                '50%': { transform: 'translatey(-20px)' },
+                '100%': { transform: 'translatey(0px)' },
+              },
+              'bg-pan': {
+                '0%': { background-position: '0% 50%' },
+                '50%': { background-position: '100% 50%' },
+                '100%': { background-position: '0% 50%' },
+              },
+               'aurora': {
+                  'from': { transform: 'translate(var(--x-start), var(--y-start))' },
+                  'to': { transform: 'translate(var(--x-end), var(--y-end))' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      html, body {
+        width: 100%;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+      body {
+        background-color: #080808;
+        color: #a0a0a0;
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s cubic-bezier(0.17, 0.55, 0.55, 1), transform 0.8s cubic-bezier(0.17, 0.55, 0.55, 1);
+      }
+      .fade-in-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Carousel utility class */
+      .transition-none {
+        transition: none !important;
+      }
+      /* Custom Scrollbar Styles */
+      body::-webkit-scrollbar {
+        width: 8px;
+      }
+      body::-webkit-scrollbar-track {
+        background: #080808; /* background */
+      }
+      body::-webkit-scrollbar-thumb {
+        background: rgba(255, 199, 0, 0.1);
+        border-radius: 4px;
+      }
+      body::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 199, 0, 0.2);
+      }
+      /* For Firefox */
+      body {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 199, 0, 0.1) #080808;
+      }
+       /* Noise Texture Overlay */
+      .noise-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.05;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      /* Hero Grid Pattern */
+      .hero-grid-bg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          background-image:
+              linear-gradient(rgba(255, 199, 0, 0.07) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 199, 0, 0.07) 1px, transparent 1px);
+          background-size: 30px 30px;
+          mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 100%);
+      }
+      
+      /* Card with interactive glow */
+      .card-glow {
+        position: relative;
+        overflow: hidden;
+        background: #121212;
+        border-radius: 0.75rem;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+      }
+      .card-glow::before {
+        content: '';
+        position: absolute;
+        left: var(--x, 50%);
+        top: var(--y, 50%);
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 500px;
+        background-image: radial-gradient(circle, rgba(255, 199, 0, 0.15) 0%, transparent 70%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      .card-glow:hover::before {
+        opacity: 1;
+      }
+      .card-glow:hover {
+        background-color: #1a1a1a;
+      }
+      
+      /* Gradient text */
+      .gradient-text {
+        background: linear-gradient(90deg, #FFC700, #FF6B00);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Aurora background */
+      .aurora-bg {
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        z-index: -2;
+        overflow: hidden;
+      }
+      .aurora-bg::before, .aurora-bg::after {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 50vmax;
+          height: 50vmax;
+          border-radius: 9999px;
+          mix-blend-mode: screen;
+          opacity: 0.2;
+          filter: blur(80px);
+          animation: aurora 20s infinite linear;
+      }
+      .aurora-bg::before {
+          background-color: #FFC700;
+          top: -25vmax;
+          left: -25vmax;
+          --x-start: -25vmax;
+          --y-start: -25vmax;
+          --x-end: 50vw;
+          --y-end: 25vh;
+      }
+      .aurora-bg::after {
+          background-color: #FF6B00;
+          right: -25vmax;
+          bottom: -25vmax;
+          animation-direction: alternate-reverse;
+          animation-duration: 25s;
+          --x-start: 50vw;
+          --y-start: 75vh;
+          --x-end: -25vmax;
+          --y-end: -25vmax;
+      }
+
+      /* Spline Viewer color adjustment */
+      #hero spline-viewer {
+        filter: hue-rotate(40deg) saturate(1.5);
+        opacity: 0.6;
+      }
+
+      /* JEET Graphic styles */
+      .jeet-line {
+          stroke: rgba(255, 199, 0, 0.4);
+          stroke-width: 1.5;
+      }
+      .jeet-node .jeet-circle-bg {
+          fill: #121212;
+          stroke: #FFC700;
+          stroke-width: 2;
+          transition: all 0.3s ease;
+      }
+      .jeet-node .jeet-circle-glow {
+          fill: transparent;
+          stroke: #FFC700;
+          stroke-width: 2;
+          filter: url(#glow);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+      }
+      .jeet-node:hover .jeet-circle-bg {
+          fill: rgba(255, 199, 0, 0.15);
+      }
+      /* When active from click, make the glow permanent and stronger */
+      .jeet-node.active .jeet-circle-glow, .jeet-node:hover .jeet-circle-glow {
+          opacity: 1;
+      }
+      .jeet-node.active .jeet-circle-bg {
+          fill: rgba(255, 199, 0, 0.2);
+      }
+      .jeet-text {
+          font-family: 'Sora', sans-serif;
+          font-size: 20px;
+          fill: #a0a0a0;
+          text-anchor: middle;
+          pointer-events: none;
+          transition: fill 0.3s ease;
+      }
+      .jeet-node:hover .jeet-text, .jeet-node.active .jeet-text {
+          fill: #ffffff;
+      }
+      .jeet-center-bg {
+          fill: rgba(255, 199, 0, 0.1);
+          stroke: #FFC700;
+          stroke-width: 2;
+      }
+      .jeet-center-text {
+          font-family: 'Sora', sans-serif;
+          font-weight: bold;
+          font-size: 24px;
+          fill: #FFC700;
+          text-anchor: middle;
+          pointer-events: none;
+      }
+      .jeet-tooltip {
+          position: fixed;
+          background: #121212;
+          border: 2px solid #FFC700;
+          padding: 0.75rem 1rem;
+          border-radius: 0.5rem;
+          max-width: 250px;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+          z-index: 999;
+          backdrop-filter: blur(5px);
+          transform: translateY(10px);
+      }
+
+      /* Golden text with orange glow */
+      .text-glow {
+        color: #FFC700; /* Gold */
+        text-shadow: 
+          0 0 8px rgba(255, 107, 0, 0.8), 
+          0 0 12px rgba(255, 107, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-gray-300 font-sans antialiased">
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+  </body>
+</html>
