@@ -9,7 +9,7 @@ export function renderTimelineItem(event: any, index: number) {
     `).join('');
   
   const contentBlock = `
-    <div class="rounded-lg px-6 py-4 card-glow fade-in border-2 border-primary">
+    <div class="rounded-lg px-6 py-4 card-glow fade-in border-2 border-primary hover:border-secondary transition-colors">
         <p class="text-sm text-primary font-semibold">${event.date}</p>
         <h3 class="mb-1 font-bold text-white text-lg">${event.title}</h3>
         <h4 class="mb-3 font-semibold text-gray-400 text-md">${event.company}</h4>

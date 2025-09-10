@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Satyajit Dutta | Portfolio</title>
+    
+    <!-- Open Graph Meta Tags for LinkedIn Sharing -->
+    <meta property="og:title" content="Satyajit Dutta | AI & HR Solution Architect Portfolio" />
+    <meta property="og:description" content="Explore the portfolio of Satyajit Dutta, a Principal HR Solution Architect with 21+ years of experience in AI-driven HR solutions, showcasing the innovative JEET Framework and a portfolio of applications." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/Satyajitdutta/my-portfolio-assets/main/gita-landing.png" />
+    <meta property="og:type" content="website" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,6 +35,7 @@
               'brand-accent': '#238636',
               'brand-accent-glow': '#30a14e',
               'brand-cyan': '#22d3ee',
+              'linkedin': '#0A66C2',
             },
             animation: {
               'gradient-text': 'gradient-text 5s ease infinite',
@@ -60,6 +68,9 @@
       }
     </script>
     <style>
+      html {
+        font-size: 18px; /* Base font size increased for better readability */
+      }
       html, body {
         width: 100%;
         overflow-x: hidden;
@@ -244,7 +255,7 @@
       }
       .jeet-text {
           font-family: 'Sora', sans-serif;
-          font-size: 20px;
+          font-size: 22px;
           fill: #a0a0a0;
           text-anchor: middle;
           pointer-events: none;
@@ -261,24 +272,10 @@
       .jeet-center-text {
           font-family: 'Sora', sans-serif;
           font-weight: bold;
-          font-size: 24px;
+          font-size: 27px;
           fill: #FFC700;
           text-anchor: middle;
           pointer-events: none;
-      }
-      .jeet-tooltip {
-          position: fixed;
-          background: #121212;
-          border: 2px solid #FFC700;
-          padding: 0.75rem 1rem;
-          border-radius: 0.5rem;
-          max-width: 250px;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-          z-index: 999;
-          backdrop-filter: blur(5px);
-          transform: translateY(10px);
       }
 
       /* Golden text with orange glow */
@@ -287,6 +284,11 @@
         text-shadow: 
           0 0 8px rgba(255, 107, 0, 0.8), 
           0 0 12px rgba(255, 107, 0, 0.5);
+      }
+      
+      /* Active Navigation Link Style */
+      #header-nav a.active {
+          color: #FFC700;
       }
     </style>
   </head>

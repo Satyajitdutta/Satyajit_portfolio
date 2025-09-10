@@ -3,6 +3,49 @@ import { setupCarousels } from './components/AppShowcase.tsx';
 import { setupJeetGraphicInteractivity } from './components/JeetGraphic.tsx';
 
 /**
+ * Sets up a scroll spy to highlight the active navigation link based on scroll position.
+ */
+function setupHeaderScrollSpy() {
+  const headerNav = document.getElementById('header-nav');
+  if (!headerNav) return;
+
+  const navLinks = Array.from(headerNav.querySelectorAll('a[href^="#"]'));
+  const sections = navLinks.map(link => {
+    const href = link.getAttribute('href');
+    return href ? document.querySelector<HTMLElement>(href) : null;
+  }).filter((el): el is HTMLElement => el !== null);
+
+  if (sections.length === 0) return;
+  
+  const header = document.querySelector('header');
+  const headerHeight = header ? header.offsetHeight : 0;
+
+  const onScroll = () => {
+    const scrollPosition = window.scrollY + headerHeight + 50; // Offset for better accuracy
+    let currentSectionId: string | null = null;
+    
+    for (const section of sections) {
+      if (section.offsetTop <= scrollPosition) {
+        currentSectionId = section.id;
+      } else {
+        break;
+      }
+    }
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${currentSectionId}`) {
+        link.classList.add('active');
+      }
+    });
+  };
+  
+  window.addEventListener('scroll', onScroll);
+  onScroll(); // Initial check
+}
+
+
+/**
  * Attaches all the interactive behaviors to the DOM after the main app is rendered.
  */
 function postRenderSetup() {
@@ -26,8 +69,8 @@ function postRenderSetup() {
     });
   }
 
-  // Smooth scrolling for navigation links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  // Smooth scrolling for internal navigation links
+  document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
       const targetId = this.getAttribute('href');
@@ -60,12 +103,21 @@ function postRenderSetup() {
     });
   });
 
+  // Setup LinkedIn Share Button
+  const shareButton = document.getElementById('linkedin-share-button');
+  if (shareButton) {
+    const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
+    shareButton.setAttribute('href', shareUrl);
+  }
 
   // Initialize JEET Framework Graphic
   setupJeetGraphicInteractivity();
 
   // Initialize carousels for the app portfolio
   setupCarousels();
+
+  // Highlight active nav link on scroll
+  setupHeaderScrollSpy();
 
   // Animate elements on scroll
   const observer = new IntersectionObserver((entries) => {

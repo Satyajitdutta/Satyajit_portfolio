@@ -44,9 +44,9 @@ export function renderJeetGraphic() {
                     <text x="${center.cx}" y="${center.cy}" class="jeet-center-text" dy=".3em">JEET</text>
                 </g>
             </svg>
-            <div id="jeet-tooltip" class="jeet-tooltip" role="tooltip">
-                <h4 id="jeet-tooltip-title" class="font-bold text-white mb-1"></h4>
-                <p id="jeet-tooltip-description" class="text-sm text-gray-400"></p>
+             <div id="jeet-details-box" class="mt-8 p-8 rounded-lg card-glow border-2 border-primary hover:border-secondary transition-colors bg-surface min-h-[140px] flex flex-col justify-center duration-300">
+                <h4 id="jeet-details-title" class="font-bold text-xl text-white mb-2 font-display transition-colors duration-300">Explore the Framework</h4>
+                <p id="jeet-details-description" class="text-gray-400 transition-colors duration-300">Click on a letter (J, E, E, T) above to see the details of each component.</p>
             </div>
         </div>
     `;
@@ -54,18 +54,19 @@ export function renderJeetGraphic() {
 
 export function setupJeetGraphicInteractivity() {
     const svg = document.getElementById('jeet-svg');
-    const tooltip = document.getElementById('jeet-tooltip');
-    if (!svg || !tooltip) return;
+    if (!svg) return;
     
-    const tooltipTitle = document.getElementById('jeet-tooltip-title') as HTMLElement;
-    const tooltipDescription = document.getElementById('jeet-tooltip-description') as HTMLElement;
+    const detailsTitle = document.getElementById('jeet-details-title') as HTMLElement;
+    const detailsDescription = document.getElementById('jeet-details-description') as HTMLElement;
     const nodes = svg.querySelectorAll<SVGGElement>('.jeet-node');
     let activeNode: SVGGElement | null = null;
+    
+    const defaultTitle = 'Explore the Framework';
+    const defaultDescription = 'Click on a letter (J, E, E, T) above to see the details of each component.';
 
-    const hideTooltip = () => {
-        if (!tooltip) return;
-        tooltip.style.opacity = '0';
-        tooltip.style.transform = 'translateY(10px)';
+    const resetDetailsBox = () => {
+        if (detailsTitle) detailsTitle.textContent = defaultTitle;
+        if (detailsDescription) detailsDescription.textContent = defaultDescription;
         if (activeNode) {
             activeNode.classList.remove('active');
             activeNode = null;
@@ -74,56 +75,34 @@ export function setupJeetGraphicInteractivity() {
 
     nodes.forEach(node => {
         node.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent body click listener from firing immediately
+            e.stopPropagation(); 
             
             const targetNode = e.currentTarget as SVGGElement;
             
-            // If clicking the same active node again, hide it.
             if (activeNode === targetNode) {
-                hideTooltip();
+                resetDetailsBox();
                 return;
             }
 
-            // Remove active state from previous node
             if (activeNode) {
                 activeNode.classList.remove('active');
             }
 
-            // Set new active node
             activeNode = targetNode;
             activeNode.classList.add('active');
 
-            const circle = targetNode.querySelector('.jeet-circle-bg');
-            if (!tooltipTitle || !tooltipDescription || !circle) return;
+            if (!detailsTitle || !detailsDescription) return;
 
-            // 1. Update tooltip content
-            tooltipTitle.textContent = targetNode.getAttribute('data-title');
-            tooltipDescription.textContent = targetNode.getAttribute('data-description');
-            
-            // Reading offsetWidth forces a reflow, ensuring the new content's size is calculated for centering
-            const tooltipWidth = tooltip.offsetWidth;
-
-            // 2. Get node position
-            const nodeRect = circle.getBoundingClientRect();
-            const offset = 10; // Space between node and tooltip
-
-            // 3. Calculate position
-            const top = nodeRect.bottom + window.scrollY + offset;
-            let left = nodeRect.left + (nodeRect.width / 2) - (tooltipWidth / 2);
-
-            // 4. Boundary checks
-            const viewportWidth = window.innerWidth;
-            if (left < 10) left = 10;
-            if (left + tooltipWidth > viewportWidth - 10) left = viewportWidth - tooltipWidth - 10;
-            
-            // 5. Set position and animate in
-            tooltip.style.left = `${left}px`;
-            tooltip.style.top = `${top}px`;
-            tooltip.style.opacity = '1';
-            tooltip.style.transform = 'translateY(0)';
+            detailsTitle.textContent = targetNode.getAttribute('data-title');
+            detailsDescription.textContent = targetNode.getAttribute('data-description');
         });
     });
 
-    // Hide tooltip when clicking outside
-    document.body.addEventListener('click', hideTooltip, true);
+    document.body.addEventListener('click', (e) => {
+        // If the click is outside the SVG container, reset the box
+        const container = (e.target as HTMLElement).closest('#jeet-svg');
+        if (!container) {
+            resetDetailsBox();
+        }
+    }, true);
 }

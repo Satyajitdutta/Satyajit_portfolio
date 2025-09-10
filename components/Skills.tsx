@@ -7,7 +7,7 @@ export function renderSkillCard(category: any, index: number) {
   `).join('');
 
   return `
-    <div class="p-6 rounded-lg card-glow fade-in border-2 border-primary" style="transition-delay: ${index * 100}ms;">
+    <div class="p-6 rounded-lg card-glow fade-in border-2 border-primary hover:border-secondary transition-colors" style="transition-delay: ${index * 100}ms;">
       <h3 class="text-xl font-bold font-display text-white mb-4">${category.title}</h3>
       <ul class="space-y-3">
         ${skillsList}

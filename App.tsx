@@ -54,7 +54,7 @@ export function App() {
 
                 ${renderJeetGraphic()}
 
-                <div class="max-w-4xl mx-auto bg-surface/80 p-8 rounded-lg card-glow fade-in border-2 border-primary" style="transition-delay: 500ms;">
+                <div class="max-w-4xl mx-auto bg-surface/80 p-8 rounded-lg card-glow fade-in border-2 border-primary hover:border-secondary transition-colors" style="transition-delay: 500ms;">
                     <h3 class="text-2xl font-bold font-display text-center text-white mb-6">Framework Impact Metrics</h3>
                     <div id="jeet-chart-container" class="w-full h-72">
                       ${renderJeetChart(JEET_CHART_DATA)}

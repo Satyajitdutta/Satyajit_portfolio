@@ -1,3 +1,5 @@
+import { LinkedinIcon } from './icons/LinkedinIcon.tsx';
+
 export function Hero() {
   return `
     <section id="hero" class="relative h-screen flex items-center justify-center text-center overflow-hidden">
@@ -13,13 +15,24 @@ export function Hero() {
             <p class="mt-6 max-w-2xl mx-auto text-gray-400 fade-in" style="animation-delay: 800ms;">
             21+ years of innovation in AI-Driven HR Solutions, People Analytics & Organizational Excellence.
             </p>
-            <div class="mt-8 fade-in" style="animation-delay: 1200ms;">
-            <a href="https://www.linkedin.com/in/satyajit-digitalhr" target="_blank" rel="noopener noreferrer" 
-               class="inline-block bg-primary/10 border-2 border-primary text-primary font-semibold px-8 py-4 rounded-lg
-                      hover:bg-primary hover:text-background
-                      transition-all duration-300">
-                Connect on LinkedIn
-            </a>
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 fade-in" style="animation-delay: 1200ms;">
+                <a href="https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=satyajit-digitalhr" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center justify-center text-background font-bold py-3 px-8 rounded-lg bg-gradient-to-r from-primary to-secondary
+                          shadow-[0_0_15px_rgba(255,199,0,0.4)]
+                          hover:shadow-[0_0_25px_rgba(255,199,0,0.7)] hover:scale-105
+                          transition-all duration-300 w-full sm:w-auto">
+                    ${LinkedinIcon()}
+                    Follow on LinkedIn
+                </a>
+                <a href="https://raw.githubusercontent.com/Satyajitdutta/my-portfolio-assets/main/Satyajit_Dutta_Resume.pdf" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center text-primary font-bold py-3 px-8 rounded-lg bg-transparent border-2 border-primary
+                            hover:bg-primary/10 hover:text-white
+                            transition-all duration-300 w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download Resume
+                </a>
             </div>
         </div>
     </section>

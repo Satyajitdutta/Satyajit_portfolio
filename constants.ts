@@ -87,7 +87,7 @@ export const APP_PROJECTS = [
     description: 'A comprehensive retail management solution designed to streamline operations for businesses, featuring inventory, billing, analytics and more.',
     features: ['Inventory Management', 'Billing & Invoicing', 'Sales Analytics', 'Product & Expense Tracking'],
     images: [`${GITHUB_ASSETS_URL}bizkit-landing.png`, `${GITHUB_ASSETS_URL}bizkit-home.png`],
-    link: 'https://studio--stallflex.us-central1.hosted.app/dashboard/guide_',
+    link: 'https://studio--stallflex.us-central1.hosted.app/dashboard',
     imageFit: 'contain',
   },
   {

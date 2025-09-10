@@ -49,19 +49,20 @@ export function renderAppCard(project: any, index: number) {
       <ul class="space-y-3 mb-6 text-gray-300">
           ${featuresList}
       </ul>
-      <a href="${project.link}" target="_blank" rel="noopener noreferrer" 
+       <a href="${project.link}" target="_blank" rel="noopener noreferrer" 
          title="Opens in a new tab"
          aria-label="View Project (opens in a new tab)"
-         class="inline-flex items-center bg-primary/10 border-2 border-primary text-primary font-semibold py-3 px-6 rounded-lg
-                hover:bg-primary hover:text-background transition-all duration-300 group/link">
+         class="inline-block text-background font-bold py-3 px-8 rounded-lg bg-gradient-to-r from-primary to-secondary
+                shadow-[0_0_15px_rgba(255,199,0,0.4)]
+                hover:shadow-[0_0_25px_rgba(255,199,0,0.7)] hover:scale-105
+                transition-all duration-300">
           View Project
-          <svg class="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002 2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
       </a>
     </div>
   `;
 
   return `
-    <article class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center p-8 card-glow bg-surface border-2 border-primary hover:border-primary transition-colors duration-300 rounded-lg">
+    <article class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center p-8 card-glow bg-surface border-2 border-primary hover:border-secondary transition-colors duration-300 rounded-lg">
       <div class="${isOdd ? 'lg:order-last' : ''}">
         ${imageBlock}
       </div>
